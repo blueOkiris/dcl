@@ -87,10 +87,6 @@ dcl_string_t dcl_replace_string(dcl_string_t str, dcl_string_t substr, dcl_strin
     return current;
 }
 
-dcl_string_t *dcl_split(dcl_string_t str, dcl_string_t separator) {
-    return NULL;
-}
-
 void dcl_m_cleanup_strings() {
     for(int i = 0; i < num_strings; i++)
         free(string_data[i]);

@@ -1,5 +1,11 @@
 #pragma once
 
+// Create a string list type for dcl_m_split
+#define DCL_LIST_TYPE string
+#include <dlist.h>
+#undef DCL_LIST_TYPE
+#undef _DLIST_H_
+
 typedef struct dcl_string {
     int length;
     const char *data;
@@ -16,4 +22,4 @@ dcl_string_t dcl_replace_string(dcl_string_t str, dcl_string_t substr, dcl_strin
 
 void dcl_m_cleanup_strings();
 
-dcl_string_t *dcl_m_split(dcl_string_t str, dcl_string_t separator);
+dcl_string_list_t dcl_split(dcl_string_t str, dcl_string_t separator);
