@@ -146,3 +146,29 @@ Unfortunately, declaring flexible array members in C structs basically requires 
 Ugh. I wanted this library to be simple, but now I have to free string_t's when I'm done, and manage the malloc'd memory when creating new copies (for *all* the functions)
 
 I could implement garbage collection or something for all this with some sort of "init" function, but yeah no.
+
+## Iteration 2
+
+### Goals
+
+Now that I've worked with the system a bit, I want to focus on QA3 again. Because of the issue with flexible array members, all these functions now create new strings (because I don't want to delete the old string) which means they all have to be freed at the end!
+
+This is a pain, and shouldn't be part of the library. I need to redesign it so it can work.
+
+### Design Choices
+
+I think I want some sort of a garbage collection system, kinda.
+
+Essesntially, have a static object that takes all the created strings and gets rid of them for me.
+
+One simple way to do this that isn't real garbage collection is to just take the strings every time a new thing is created, and store them until dcl_garbage_free is called at the end or something. This isn't a great solution as a giant ammount of memory could be used for this one object.
+
+The other solution is a more traditional garbage collection system, but I know little about those, and most of my experience is running an interpreter where I have control of when garbage collection is done, not when I'm building a client library, which is different. I need to do more research to gain a better understanding of this system.
+
+Unfortunately, I don't actually know how I could tell when I'm "done" with a string_t, so I think I've got to go with option a.
+
+Basically I'll have some sort of static etern struct that gets freed at the end of a program. It stores all the char ** for the program, and every time a new string_t is created, its value is added to the list.
+
+### Analysis
+
+I don't like this solution, but I don't see another option. I think it's a good work around for small projects, I just have to hope that it will scale okay
