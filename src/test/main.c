@@ -11,6 +11,7 @@
 #define replace(x, y, z)    dcl_replace_string(x, y, z)
 
 int main(int argc, char **args) {
+    // Test strings
     string_t str_test = new_str("Hello, world!");
 
     printf("%s\n%s\n%s\n%s\n%s\n",
@@ -20,6 +21,12 @@ int main(int argc, char **args) {
         cat(new_str("Hello, "), new_str("world!")).data,
         replace(new_str("foo foo foo"), new_str("foo"), new_str("bar")).data);
 
+    // Test string lists
+    dcl_string_list_t test_list = dcl_new_string_list(str_test);
+    printf("%s\n",
+        (test_list.data[0]).data);
+
+    // Clean up all library stuff
     dcl_m_cleanup_strings();
     dcl_m_cleanup_lists();
 

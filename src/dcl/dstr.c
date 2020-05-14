@@ -6,6 +6,13 @@
 int num_strings = 0;
 char **string_data = NULL;
 
+#define DCL_LIST_TYPE dcl_string_t
+#define DCL_NEW_LIST_NAME string
+#undef DCL_LIST_HEADER
+#include <dlist.h>
+#undef DCL_LIST_TYPE
+#undef DCL_NEW_LIST_NAME
+
 dcl_string_t dcl_new_string(const char *value) {
     int size = strlen(value);
 

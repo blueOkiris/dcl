@@ -1,5 +1,6 @@
 #ifdef DCL_LIST_TYPE
 #ifdef DCL_NEW_LIST_NAME
+#ifdef DCL_LIST_HEADER
 
 #ifndef _DLIST_FUNC_H_
 #define _DLIST_FUNC_H_
@@ -10,17 +11,41 @@ void dcl_m_cleanup_lists();
 
 #endif
 
-#ifndef _DLIST_H_
-#define _DLIST_H_
-
 #define DLIST_PASTE(x, y)   x ## y
 #define DLIST_LIST_TYPE(T)  DLIST_PASTE(T, _list_t)
-#define DLIST_STRUCT(x)     DLIST_PASTE(dcl_, x)      
+#define DLIST_STRUCT(x)     DLIST_PASTE(dcl_, x)
+#define DLIST_ADD_NEW(x)    DLIST_PASTE(new_, x)
+#define DLIST_ADD_LIST(x)   DLIST_PASTE(x, _list)
+
+#include <stdlib.h>
+
+// Define stuf for header files
 
 typedef struct dcl_list {
     int length;
-    DCL_LIST_TYPE *data_array;
+    DCL_LIST_TYPE *data;
 } DLIST_STRUCT(DLIST_LIST_TYPE(DCL_NEW_LIST_NAME));
+
+DLIST_STRUCT(DLIST_LIST_TYPE(DCL_NEW_LIST_NAME)) DLIST_STRUCT(DLIST_ADD_NEW(DLIST_ADD_LIST(DCL_NEW_LIST_NAME))) (DCL_LIST_TYPE first);
+
+#else
+
+// Define the implementations for c files
+
+DLIST_STRUCT(DLIST_LIST_TYPE(DCL_NEW_LIST_NAME)) DLIST_STRUCT(DLIST_ADD_NEW(DLIST_ADD_LIST(DCL_NEW_LIST_NAME))) (DCL_LIST_TYPE first) {
+    DCL_LIST_TYPE *new_array = malloc(sizeof(DCL_LIST_TYPE));
+    new_array[0] = first;
+
+    e_num_lists++;
+    if(e_list_data == NULL)
+        e_list_data = malloc(sizeof(void *));
+    else
+        e_list_data = realloc(e_list_data, sizeof(void *) * (e_num_lists));
+    
+    e_list_data[e_num_lists - 1] = (void *) new_array;
+
+    return ( DLIST_STRUCT(DLIST_LIST_TYPE(DCL_NEW_LIST_NAME)) ) { 1, new_array };
+}
 
 #endif
 #endif
