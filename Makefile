@@ -30,7 +30,7 @@ all : lib $(TESTNAME)
 
 .PHONY : test
 test : $(TESTNAME)
-$(TESTNAME) : $(LIBNAME)
+$(TESTNAME) : $(LIBNAME) $(TESTSRC)
 	$(CC) $(CFLAGS) -Ibin/headers -Lbin/lib $(TESTINC) -o $(TESTNAME) $(TESTSRC) -ldcl
 
 .PHONY : lib

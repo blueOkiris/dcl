@@ -1,8 +1,9 @@
-#include <test.h>
+#include <stdio.h>
+
+#include <dstr.h>
 
 int main(int argc, char **args) {
-    printHelloWorld();
-    print2();
+    printf("Hello, world!\n");
 
     return 0;
 }
