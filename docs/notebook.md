@@ -172,3 +172,5 @@ Basically I'll have some sort of static etern struct that gets freed at the end 
 ### Analysis
 
 I don't like this solution, but I don't see another option. I think it's a good work around for small projects, I just have to hope that it will scale okay
+
+I've also decided I'm not going to implement "split" until I've created a list type, so yeah.
