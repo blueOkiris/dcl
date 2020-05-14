@@ -14,4 +14,4 @@ Then you can run the test application with `./bin/test`
 
 ## Design Process
 
-To see into the design process, view docs/notebook.md
+To see into the design process, view docs/\*-nb.md
