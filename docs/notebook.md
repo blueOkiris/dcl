@@ -115,15 +115,15 @@ Then I'd need a few methods. I could pass it in as a parameter and return a new 
 
  1. string_t dcl_new_string(const char *value)
 
- 2. string_t dcl_append_string(string_t start)
+ 2. string_t dcl_substr(string_t start, int index, int length)
 
- 3. string_t dcl_substr(string_t start, int index, int length)
+ 3. string_t dcl_set_char(string_t start, int index, char new_value)
 
- 4. string_t dcl_set_char(string_t start, int index, char new_value)
+ 4. string_t dcl_concat(string_t str1, string_t str2)
 
- 5. string_t dcl_concat(string_t str1, string_t str2)
+ 5. string_t *dcl_m_split(string_t str, string_t separator) - Note that this one uses malloc to create a list of strings (maybe I'll try to design a list system next)
 
- 6. string_t *dcl_m_split(string_t str, string_t separator) - Note that this one uses malloc to create a list of strings (maybe I'll try to design a list system next)
+ 6. string_t dcl_replace_string(string_t str, string_t substr)
 
  7. void dcl_string_to_array(char *dest, string_t str)
 
@@ -138,3 +138,11 @@ The current design also satisfies QA2, in that all I'd need for a new string "me
 Function 7 satisfies QA1, and the various others satisfy UC2
 
 So basically this first idea actually will satisfy all my needs, so I can start coding
+
+### Update
+
+Unfortunately, declaring flexible array members in C structs basically requires malloc to be used. So basically I have to use malloc no matter what.
+
+Ugh. I wanted this library to be simple, but now I have to free string_t's when I'm done, and manage the malloc'd memory when creating new copies (for *all* the functions)
+
+I could implement garbage collection or something for all this with some sort of "init" function, but yeah no.
