@@ -11,3 +11,7 @@ To build the library run `make lib`
 To build the test application run `make test`
 
 Then you can run the test application with `./bin/test`
+
+## Design Process
+
+To see into the design process, view docs/notebook.md
