@@ -1,15 +1,17 @@
 #pragma once
 
-// Create a string list type for dcl_m_split
-#define DCL_LIST_TYPE string
-#include <dlist.h>
-#undef DCL_LIST_TYPE
-#undef _DLIST_H_
-
 typedef struct dcl_string {
     int length;
     const char *data;
 } dcl_string_t;
+
+// Create a string list type for dcl_m_split
+#define DCL_LIST_TYPE dcl_string_t
+#define DCL_NEW_LIST_NAME string
+#include <dlist.h>
+#undef DCL_LIST_TYPE
+#undef DCL_NEW_LIST_NAME
+#undef _DLIST_H_
 
 dcl_string_t dcl_new_string(const char *value);
 

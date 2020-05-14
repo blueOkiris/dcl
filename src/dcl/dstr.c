@@ -88,8 +88,12 @@ dcl_string_t dcl_replace_string(dcl_string_t str, dcl_string_t substr, dcl_strin
 }
 
 void dcl_m_cleanup_strings() {
+    if(string_data == NULL)
+        return;
+
     for(int i = 0; i < num_strings; i++)
         free(string_data[i]);
 
     free(string_data);
+    string_data = NULL;
 }

@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 #include <dstr.h>
+#include <dlist.h>
 
 #define string_t            dcl_string_t
 #define new_str(x)          dcl_new_string(x)
@@ -20,6 +21,7 @@ int main(int argc, char **args) {
         replace(new_str("foo foo foo"), new_str("foo"), new_str("bar")).data);
 
     dcl_m_cleanup_strings();
+    dcl_m_cleanup_lists();
 
     return 0;
 }
