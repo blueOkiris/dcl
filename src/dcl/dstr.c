@@ -56,8 +56,35 @@ dcl_string_t dcl_concat(dcl_string_t str1, dcl_string_t str2) {
     return new_string_t;
 }
 
-dcl_string_t dcl_replace_string(dcl_string_t str, dcl_string_t substr) {
-    return dcl_new_string("");
+int dcl_compare_str(dcl_string_t str1, dcl_string_t str2) {
+    return strcmp(str1.data, str2.data);
+}
+
+int dcl_index_of(dcl_string_t str, dcl_string_t substr, int start) {
+    for(int i = 0; i < str.length - substr.length + 1; i++) {
+        if(0 == dcl_compare_str(dcl_substr(str, i, substr.length), substr))
+            return i;
+    }
+
+    return -1;
+}
+
+dcl_string_t dcl_replace_string(dcl_string_t str, dcl_string_t substr, dcl_string_t newsub) {
+    int ind;
+    dcl_string_t current = dcl_new_string(str.data);
+
+    do {
+        ind = dcl_index_of(current, substr, 0);
+        if(ind == -1)
+            continue;
+
+        dcl_string_t left = dcl_substr(current, 0, ind);
+        dcl_string_t right = dcl_substr(current, ind + substr.length, current.length - (ind + substr.length));
+
+        current = dcl_concat(left, dcl_concat(newsub, right));
+    } while(ind != -1);
+
+    return current;
 }
 
 dcl_string_t *dcl_split(dcl_string_t str, dcl_string_t separator) {
