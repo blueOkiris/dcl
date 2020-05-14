@@ -46,7 +46,14 @@ dcl_string_t dcl_set_char(dcl_string_t str, int index, char new_value) {
 }
 
 dcl_string_t dcl_concat(dcl_string_t str1, dcl_string_t str2) {
-    return dcl_new_string("");
+    char *new_string = malloc(sizeof(char) * (str1.length + str2.length + 1));
+    strcpy(new_string, str1.data);
+    strcpy(new_string + str1.length, str2.data);
+    new_string[str1.length + str2.length] = '\0';
+
+    dcl_string_t new_string_t = dcl_new_string((const char *) new_string);
+    free(new_string);
+    return new_string_t;
 }
 
 dcl_string_t dcl_replace_string(dcl_string_t str, dcl_string_t substr) {
