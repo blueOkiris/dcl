@@ -35,7 +35,14 @@ dcl_string_t dcl_substr(dcl_string_t str, int index, int length) {
 }
 
 dcl_string_t dcl_set_char(dcl_string_t str, int index, char new_value) {
-    return dcl_new_string("");
+    char *new_string = malloc(sizeof(char) * (str.length + 1));
+    strcpy(new_string, str.data);
+    new_string[str.length] = '\0';
+    new_string[index] = new_value;
+
+    dcl_string_t new_string_t = dcl_new_string((const char *) new_string);
+    free(new_string);
+    return new_string_t;
 }
 
 dcl_string_t dcl_concat(dcl_string_t str1, dcl_string_t str2) {
