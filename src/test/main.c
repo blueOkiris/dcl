@@ -2,14 +2,20 @@
 
 #include <dstr.h>
 
+#define string_t            dcl_string_t
+#define new_str(x)          dcl_new_string(x)
+#define substr(x, y, z)     dcl_substr(x, y, z)
+#define set_char(x, y, z)   dcl_set_char(x, y, z)
+#define cat(x, y)           dcl_concat(x, y)
+
 int main(int argc, char **args) {
-    dcl_string_t str_test = dcl_new_string("Hello, world!");
+    string_t str_test = new_str("Hello, world!");
 
     printf("%s\n%s\n%s\n%s\n",
         str_test.data,
-        dcl_substr(str_test, 1, 4).data,
-        dcl_set_char(dcl_substr(str_test, 1, 4), 0, '3').data,
-        dcl_concat(dcl_new_string("Hello, "), dcl_new_string("world!")).data);
+        substr(str_test, 1, 4).data,
+        set_char(substr(str_test, 1, 4), 0, '3').data,
+        cat(new_str("Hello, "), new_str("world!")).data);
 
     dcl_m_cleanup_strings();
 
