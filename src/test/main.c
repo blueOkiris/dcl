@@ -23,8 +23,9 @@ int main(int argc, char **args) {
 
     // Test string lists
     dcl_string_list_t test_list = dcl_new_string_list(str_test);
-    printf("%s\n",
-        (test_list.data[0]).data);
+    printf("%s\n%s\n",
+        test_list.data[0].data,
+        dcl_string_list_add(test_list, str_test).data[1].data);
 
     // Clean up all library stuff
     dcl_m_cleanup_strings();

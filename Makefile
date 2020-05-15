@@ -14,7 +14,7 @@ LIBHDRFLDRS=  headers
 # -Wall -> Show all warnings while compiling
 # LDFLAGS -> Include my library in the test application compiling
 CC=            gcc
-CFLAGS=        -O2 -Wall
+CFLAGS=        -g -Wall
 
 # Actual files in folders (used folders to simplify makefile)
 LIBSRC=        $(foreach folder,$(LIBSRCFLDRS),$(wildcard $(folder)/*.c))
