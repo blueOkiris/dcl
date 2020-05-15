@@ -63,13 +63,14 @@ dcl_string_t dcl_concat(dcl_string_t str1, dcl_string_t str2) {
     return new_string_t;
 }
 
-int dcl_compare_str(dcl_string_t str1, dcl_string_t str2) {
-    return strcmp(str1.data, str2.data);
+int dcl_compare_str(dcl_string_t *str1, dcl_string_t *str2) {
+    return strcmp(str1->data, str2->data);
 }
 
 int dcl_index_of(dcl_string_t str, dcl_string_t substr, int start) {
     for(int i = 0; i < str.length - substr.length + 1; i++) {
-        if(0 == dcl_compare_str(dcl_substr(str, i, substr.length), substr))
+        dcl_string_t temp = dcl_substr(str, i, substr.length);
+        if(0 == dcl_compare_str(&temp, &substr))
             return i;
     }
 

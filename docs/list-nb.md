@@ -131,3 +131,35 @@ Another is to use the solution I found for strings, but unfortunately I can't do
 Or can I?
 
 What if I make a c file (and header) that creates an external void ** and int for managing list memory, and then I can access *that* list in all the creation of new lists! Then I can put a dcl_lists_free function in the second header and boom! I can call that instead. Or I can even make a second header guard just for that method and then add the C file which will undef the first guard and not have any types defined, and then def (by including) the second guard
+
+### Analysis
+
+This works pretty well and is easily adaptable for users
+
+## Iteration 4
+
+### Purpose
+
+I need to implement the sorting algorithm for the list. I'm gonna do a pretty simple sort, but it will be helpful to have an insert function I think, even if my sort ends up using arrays in the end
+
+### Design Choices
+
+I don't know what this sort is called, but I believe it is O(n * log(n)), maybe TreeSort? if that's a thing
+
+Basically, iterate through a list, and create a new list as you go. If the item is bigger than the center item, check left, if greater check right. Then check if the item is less than or greater than for the sub list, and so on. You basically for a binary tree like:
+
+&nbsp;&nbsp;5
+&nbsp;2&nbsp;&nbsp;8
+1&nbsp;&nbsp;6&nbsp;7
+
+but it's stored as my list type and then returned sorted.
+
+Alternatively, I can just use qsort on "data" and then rebind it to a new list.
+
+This will be MUCH less memory intensive, and probably work better, so I'll do that
+
+### Analysis
+
+I may need an insert method and a sublist method for my algorithm, but I'll include them anyway since they could be useful.
+
+qsort is a nice standard function that afaik people trust, so it'll probably work great for my library, and it will be better as far as memory management is concerned.

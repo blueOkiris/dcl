@@ -18,6 +18,7 @@ void dcl_m_cleanup_lists();
 #define DLIST_ADD_LIST(x)   DLIST_PASTE(x, _list)
 #define DLIST_ADD_ADD(x)    DLIST_PASTE(x, _add)
 #define DLIST_ADD_REMOVE(x) DLIST_PASTE(x, _remove)
+#define DLIST_ADD_SORT(x)   DLIST_PASTE(x, _sort)
 
 #include <stdlib.h>
 
@@ -31,6 +32,8 @@ typedef struct dcl_list {
 DLIST_STRUCT(DLIST_LIST_TYPE(DCL_NEW_LIST_NAME)) DLIST_STRUCT(DLIST_ADD_NEW(DLIST_ADD_LIST(DCL_NEW_LIST_NAME))) (DCL_LIST_TYPE first);
 DLIST_STRUCT(DLIST_LIST_TYPE(DCL_NEW_LIST_NAME)) DLIST_STRUCT(DLIST_ADD_ADD(DLIST_ADD_LIST(DCL_NEW_LIST_NAME))) ( DLIST_STRUCT(DLIST_LIST_TYPE(DCL_NEW_LIST_NAME)) old_list, DCL_LIST_TYPE elem );
 DLIST_STRUCT(DLIST_LIST_TYPE(DCL_NEW_LIST_NAME)) DLIST_STRUCT(DLIST_ADD_REMOVE(DLIST_ADD_LIST(DCL_NEW_LIST_NAME))) ( DLIST_STRUCT(DLIST_LIST_TYPE(DCL_NEW_LIST_NAME)) old_list, int index );
+DLIST_STRUCT(DLIST_LIST_TYPE(DCL_NEW_LIST_NAME)) DLIST_STRUCT(DLIST_ADD_SORT(DLIST_ADD_LIST(DCL_NEW_LIST_NAME))) ( DLIST_STRUCT(DLIST_LIST_TYPE(DCL_NEW_LIST_NAME)) old_list, int (*comparator) (const void *, const void *) );
+
 #else
 
 // Define the implementations for c files
@@ -76,6 +79,15 @@ DLIST_STRUCT(DLIST_LIST_TYPE(DCL_NEW_LIST_NAME)) DLIST_STRUCT(DLIST_ADD_REMOVE(D
     e_list_data[e_num_lists - 1] = (void *) new_array;
 
     return ( DLIST_STRUCT(DLIST_LIST_TYPE(DCL_NEW_LIST_NAME)) ) { old_list.length - 1, new_array };
+}
+
+DLIST_STRUCT(DLIST_LIST_TYPE(DCL_NEW_LIST_NAME)) DLIST_STRUCT(DLIST_ADD_SORT(DLIST_ADD_LIST(DCL_NEW_LIST_NAME))) ( DLIST_STRUCT(DLIST_LIST_TYPE(DCL_NEW_LIST_NAME)) old_list, int (*comparator) (const void *, const void *) ) {
+    DCL_LIST_TYPE *temp = malloc(sizeof(DCL_LIST_TYPE) * old_list.length);
+    memcpy(temp, old_list.data, sizeof(DCL_LIST_TYPE) * old_list.length);
+
+    qsort(temp, old_list.length, sizeof(DCL_LIST_TYPE), comparator);
+
+    return ( DLIST_STRUCT(DLIST_LIST_TYPE(DCL_NEW_LIST_NAME)) ) { old_list.length, temp };
 }
 
 #endif
