@@ -30,11 +30,13 @@ int main(int argc, char **args) {
     dcl_string_list_t test_list_2 = dcl_string_list_remove(test_list, 1);
     dcl_string_list_t test_list_3 = dcl_string_list_insert(test_list_2, str_test_2, 1);
     dcl_string_list_t test_list_4 = dcl_string_list_sort(test_list, (int (*) (const void *, const void *)) &dcl_compare_str);
+    dcl_string_list_t test_list_5 = dcl_string_list_sublist(dcl_string_list_add(dcl_string_list_add(test_list, str_test), str_test_2), 1, 4);
 
     printf("Test List:\n\t%s\n\t%s\n\t%s\n", test_list.data[0].data, test_list.data[1].data, test_list.data[2].data);
     printf("Test List without index 1:\n\t%s\n\t%s\n", test_list_2.data[0].data, test_list_2.data[1].data);
     printf("Test List with index 1 reinserted:\n\t%s\n\t%s\n\t%s\n", test_list_3.data[0].data, test_list_3.data[1].data, test_list_3.data[2].data);
     printf("Test List with items sorted (based on strcmp):\n\t%s\n\t%s\n\t%s\n", test_list_4.data[0].data, test_list_4.data[1].data, test_list_4.data[2].data);
+    printf("Test List of sublist:\n\t%s\n\t%s\n\t%s\n\t%s\n", test_list_5.data[0].data, test_list_5.data[1].data, test_list_5.data[2].data, test_list_5.data[3].data);
 
     // Clean up all library stuff
     dcl_m_cleanup_strings();
