@@ -95,6 +95,29 @@ dcl_string_t dcl_replace_string(dcl_string_t str, dcl_string_t substr, dcl_strin
     return current;
 }
 
+dcl_string_list_t dcl_split_string(dcl_string_t str, dcl_string_t separator) {
+    dcl_string_list_t ret_list = dcl_string_list_remove(dcl_new_string_list(dcl_new_string("")), 0);
+    dcl_string_t temp_str = str;
+    
+    int i = 0;
+    while(i != -1 && i < str.length) {
+        i = dcl_index_of(temp_str, separator, i);
+        
+        // No more separators, i.e. last string
+        if(i == -1) {
+            ret_list = dcl_string_list_add(ret_list, temp_str);
+            break;
+        }
+
+        ret_list = dcl_string_list_add(ret_list, dcl_substr(temp_str, 0, i));
+
+        i += separator.length;
+        temp_str = dcl_substr(temp_str, i, temp_str.length - i);
+    }
+
+    return ret_list;
+}
+
 void dcl_m_cleanup_strings() {
     if(string_data == NULL)
         return;

@@ -3,25 +3,21 @@
 #include <dstr.h>
 #include <dlist.h>
 
-#define string_t            dcl_string_t
-#define new_str(x)          dcl_new_string(x)
-#define substr(x, y, z)     dcl_substr(x, y, z)
-#define set_char(x, y, z)   dcl_set_char(x, y, z)
-#define cat(x, y)           dcl_concat(x, y)
-#define replace(x, y, z)    dcl_replace_string(x, y, z)
-
 int main(int argc, char **args) {
     // Test strings
-    string_t str_test = new_str("Hello, world!");
-    string_t str_test_2 = new_str("foo bar baz");
-    string_t str_test_3 = new_str("abcdefg");
+    dcl_string_t str_test = dcl_new_string("Hello, world!");
+    dcl_string_t str_test_2 = dcl_new_string("foo bar baz");
+    dcl_string_t str_test_3 = dcl_new_string("abcdefg");
 
     printf("String tests:\n");
     printf("str_test should == 'Hello, world!':\n\t%s\n", str_test.data);
-    printf("substr(str_test, 4) == 'ello':\n\t%s\n", substr(str_test, 1, 4).data);
-    printf("set char 0 of prev to '3' == '3llo':\n\t%s\n", set_char(substr(str_test, 1, 4), 0, '3').data);
-    printf("'Hello, ' ++ 'world!' == 'Hello, world!':\n\t%s\n", cat(new_str("Hello, "), new_str("world!")).data);
-    printf("replace all 'foo' with 'bar' in 'foo foo foo' == 'bar bar bar':\n\t%s\n", replace(new_str("foo foo foo"), new_str("foo"), new_str("bar")).data);
+    printf("substr(str_test, 4) == 'ello':\n\t%s\n", dcl_substr(str_test, 1, 4).data);
+    printf("set char 0 of prev to '3' == '3llo':\n\t%s\n", dcl_set_char(dcl_substr(str_test, 1, 4), 0, '3').data);
+    printf("'Hello, ' ++ 'world!' == 'Hello, world!':\n\t%s\n", dcl_concat(dcl_new_string("Hello, "), dcl_new_string("world!")).data);
+    printf("replace all 'foo' with 'bar' in 'foo foo foo' == 'bar bar bar':\n\t%s\n", dcl_replace_string(dcl_new_string("foo foo foo"), dcl_new_string("foo"), dcl_new_string("bar")).data);
+
+    dcl_string_list_t split_test = dcl_split_string(str_test_2, dcl_new_string(" "));
+    printf("Split string 'foo bar baz' by ' ':\n\t%s\n\t%s\n\t%s\n", split_test.data[0].data, split_test.data[1].data, split_test.data[2].data);
 
     // Test string lists
     printf("\nList Tests\n");
